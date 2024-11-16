@@ -10,8 +10,9 @@ env/
 
 # Data files
 data/output.wav
+data/recorded_audio.wav
 
-# Streamlit cache
+# Streamlit cache and config
 .streamlit/
 
 # Logs

@@ -50,6 +50,11 @@ This project aims to develop a real-time speech emotion recognition system that 
 4. Select the sentiment analysis options (e.g., Sentiments, Sentiments with Scores).
 5. Click the "Get Sentiments" button to view the analysis.
 
+
+# Data files
+data/recorded_audio.wav
+
+
 ## Technologies Used
 
 - **[Streamlit](https://streamlit.io/)**: For building the interactive web UI.

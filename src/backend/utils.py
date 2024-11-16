@@ -3,44 +3,34 @@ import os
 import subprocess
 from src.backend.config import DATA_DIR
 
+
+
 def save_audio(audio_bytes, sample_width, sample_rate, num_channels=1):
     """
-    Saves audio bytes to a fixed WAV file: data/output.wav
+    Saves the recorded audio bytes directly to the data directory
     """
     try:
-        # Ensure the data directory exists
         os.makedirs(DATA_DIR, exist_ok=True)
+        abs_audio_path = os.path.join(DATA_DIR, "recorded_audio.wav")
         
-        # Define the fixed filename
-        filename = "output.wav"
-        abs_audio_path = os.path.join(DATA_DIR, filename)
+        # Write the audio bytes directly to file
+        with open(abs_audio_path, 'wb') as f:
+            f.write(audio_bytes)
         
-        print(f"Saving audio to: {abs_audio_path}")
-        print(f"Audio parameters - Width: {sample_width}, Rate: {sample_rate}, Channels: {num_channels}")
-        
-        # Write the audio bytes to the WAV file
-        with wave.open(abs_audio_path, 'wb') as wave_file:
-            wave_file.setnchannels(num_channels)
-            wave_file.setsampwidth(sample_width)
-            wave_file.setframerate(sample_rate)
-            wave_file.writeframes(audio_bytes)
-        
-        # Verify that the file was created successfully
+        # Verify the file
         if os.path.exists(abs_audio_path):
             file_size = os.path.getsize(abs_audio_path)
             print(f"Audio file saved successfully. Size: {file_size} bytes")
-            print(f"Absolute path: {abs_audio_path}")
             if file_size == 0:
-                print("Warning: The saved audio file is empty.")
-                raise ValueError("Saved audio file is empty.")
+                raise ValueError("Saved audio file is empty")
             return abs_audio_path
         else:
-            print(f"Warning: Audio file was not created at {abs_audio_path}")
-            raise FileNotFoundError(f"Audio file was not created at {abs_audio_path}")
+            raise FileNotFoundError(f"Failed to save audio file at {abs_audio_path}")
             
     except Exception as e:
-        print(f"Error in save_audio: {str(e)}")
+        print(f"Error saving audio: {str(e)}")
         raise
+    
 
 def verify_audio_file(audio_path):
     """

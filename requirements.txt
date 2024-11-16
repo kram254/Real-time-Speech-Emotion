@@ -7,3 +7,4 @@ torchaudio
 torchvision
 numpy
 ffmpeg-python
+Pillow
